@@ -20,7 +20,7 @@
     .contact{display:grid;gap:10px;margin-top:2px}.row{display:flex;align-items:center;gap:10px;color:var(--ink);text-decoration:none;width:fit-content}.row strong{font-size:clamp(1.15rem,1.8vw,1.55rem);line-height:1;letter-spacing:-.03em}.row span{color:var(--muted)}.icon{width:20px;height:20px;color:var(--blue-900);flex:0 0 auto}
     .agency{display:grid;gap:3px}.agency-title{margin:0;color:var(--blue-900);font-weight:800;font-size:1.05rem;letter-spacing:-.02em;text-transform:uppercase}.agency-sub{margin:0;color:var(--muted);font-size:.98rem}
     .social{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:2px}.social-title{margin:0;font-weight:700;color:var(--blue-900);font-size:.95rem}.social-icons{display:flex;gap:10px}.social-link{width:38px;height:38px;border-radius:50%;border:1.5px solid rgba(17,72,98,.24);display:grid;place-items:center;color:var(--blue-900);text-decoration:none;background:#fff}
-    .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}.btn{min-height:46px;display:inline-flex;align-items:center;justify-content:center;padding:13px 17px;border-radius:var(--r-full);text-decoration:none;font-weight:700;border:1px solid transparent;font-size:.95rem}.btn-primary{background:var(--blue-800);color:#fff}.btn-secondary{background:#fff;color:var(--ink);border-color:var(--line)}
+    .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}.btn{min-height:46px;display:inline-flex;align-items:center;justify-content:center;padding:13px 17px;border-radius:var(--r-full);text-decoration:none;font-weight:700;border:1px solid transparent;font-size:.95rem;cursor:pointer}.btn-primary{background:var(--blue-800);color:#fff}.btn-secondary{background:#fff;color:var(--ink);border-color:var(--line)}
     @media (max-width:860px){.card{grid-template-columns:1fr}.right{min-height:220px}.logo-mark{width:110px;height:110px}}
     @media (max-width:640px){body{padding:10px}.left{padding:22px}.actions{flex-direction:column}.btn{width:100%}}
   </style>
@@ -65,7 +65,11 @@
 /g,'\n').replace(/,/g,'\,').replace(/;/g,'\;');
     const v=[`BEGIN:VCARD`,`VERSION:3.0`,`N:${e(c.lastName)};${e(c.firstName)};;;`,`FN:${e(c.fullName)}`,`ORG:${e(c.company)}`,`TITLE:${e(c.role)}`,`TEL;TYPE=CELL:${e(c.phone)}`,`EMAIL;TYPE=INTERNET:${e(c.email)}`,`ADR;TYPE=WORK:;;;;;;${e(c.country)}`,`END:VCARD`].join('
 ');
-    const b=new Blob([v],{type:'text/vcard;charset=utf-8'}),u=URL.createObjectURL(b); document.getElementById('downloadVcf').href=u; document.getElementById('downloadVcf').download='jonathan-cordeiro-dansereau.vcf'; window.addEventListener('beforeunload',()=>URL.revokeObjectURL(u));
+    const dataUri='data:text/vcard;charset=utf-8,'+encodeURIComponent(v);
+    const a=document.getElementById('downloadVcf');
+    a.href=dataUri;
+    a.download='jonathan-cordeiro-dansereau.vcf';
+    a.addEventListener('click',()=>{setTimeout(()=>{if(a.href.startsWith('data:')) a.href=dataUri;},0);});
   </script>
 </body>
 </html>
